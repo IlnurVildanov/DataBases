@@ -19,12 +19,15 @@ CREATE TABLE Drug (
     company_id INTEGER REFERENCES Company(id) ON DELETE CASCADE
 );
 
--- Таблица для связи между Company и Drug
+-- Таблица для связи между Company и Drug 
 CREATE TABLE Company_Drug (
     company_id INTEGER REFERENCES Company(id) ON DELETE CASCADE,
     drug_id INTEGER REFERENCES Drug(id) ON DELETE CASCADE,
+    role VARCHAR(50),  -- Новое поле для роли компании в разработке препарата
+    start_date DATE,    -- Новое поле для даты начала разработки
     PRIMARY KEY (company_id, drug_id)
 );
+
 
 -- Таблица для сущности Procedure
 CREATE TABLE Procedure (
