@@ -19,7 +19,7 @@ CREATE TABLE Drug (
     company_id INTEGER REFERENCES Company(id) ON DELETE CASCADE
 );
 
--- Таблица для связи многие-ко-многим между Company и Drug
+-- Таблица для связи между Company и Drug
 CREATE TABLE Company_Drug (
     company_id INTEGER REFERENCES Company(id) ON DELETE CASCADE,
     drug_id INTEGER REFERENCES Drug(id) ON DELETE CASCADE,
@@ -36,13 +36,13 @@ CREATE TABLE Procedure (
     drug_id INTEGER REFERENCES Drug(id) ON DELETE CASCADE
 );
 
--- Таблица для сущности Patent
+-- Таблица для сущности Patent 
 CREATE TABLE Patent (
     id SERIAL PRIMARY KEY,
     number VARCHAR(100) NOT NULL,
     issue_date DATE,
     status VARCHAR(50),
-    drug_id INTEGER REFERENCES Drug(id) ON DELETE CASCADE
+    drug_id INTEGER UNIQUE REFERENCES Drug(id) ON DELETE CASCADE -- Связь 1 к 1
 );
 
 -- Таблица для сущности Agreement
@@ -84,7 +84,7 @@ VALUES (1, 1), -- BioPharma и CureX
 INSERT INTO Procedure (type, description, start_date, status, drug_id)
 VALUES ('Patent Application', 'Filing for patent of CureX', '2022-03-15', 'In Process', 1);
 
--- Добавление патентов
+-- Добавление патентов (теперь 1 к 1 с Drug)
 INSERT INTO Patent (number, issue_date, status, drug_id)
 VALUES ('US123456', '2023-06-01', 'Approved', 2);
 
